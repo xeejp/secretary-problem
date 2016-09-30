@@ -5,7 +5,7 @@
     case 'description':
       return '説明'
     case 'experiment':
-      return '出席確認'
+      return '実験'
     case 'result':
       return '終了'
     default:

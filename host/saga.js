@@ -1,12 +1,19 @@
 import { put, take, call, select, fork } from 'redux-saga/effects'
 
 import { fetchContents, backPage, nextPage, submitPage, changePage, updateQuestion } from './actions'
+import { calcResult } from './calcResult'
 
 function* changePageSaga() {
   while (true) {
     const { payload } = yield take(`${submitPage}`)
-    sendData('change page', payload)
-    if(payload == "waiting" || payload == "experiment") yield call(sendData, 'all reset')
+    if(payload == "waiting" || payload == "experiment") {
+      yield call(sendData, 'all reset')
+    }
+    yield call(sendData, 'change page', payload)
+    if(payload == "result") {
+      const { participants: participants, question_text: question_text } = yield select( ({ participants, question_text })  => ({ participants, question_text }))
+      yield call(sendData, 'send result', calcResult(participants, question_text))
+    }
     yield put(changePage(payload))
   }
 }

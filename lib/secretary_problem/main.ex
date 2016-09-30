@@ -1,5 +1,5 @@
-defmodule AllaisParadox.Main do
-  alias AllaisParadox.Actions
+defmodule SecretaryProblem.Main do
+  alias SecretaryProblem.Actions
 
   @pages ["waiting", "description", "experiment", "result"]
   @sequence ["question", "answered"]
@@ -13,7 +13,13 @@ defmodule AllaisParadox.Main do
       participants: %{},
       joined: 0,
       answered: 0,
-      question_text: %{}
+      question_text: %{
+        "secretaries": 10,
+        "waiting_text": "参加者の登録を待っています。\nこの画面のまましばらくお待ちください。",
+        "question": %{
+          choices: ["不採用", "採用"]
+        }
+      }
     }
   end
 
@@ -22,6 +28,10 @@ defmodule AllaisParadox.Main do
       question_text: data.question_text,
       active: true,
       joined: 1,
+      answer: -1,
+      slideIndex: 0,
+      secretaries: :rand.uniform(100000000),
+      result: [],
     }
   end
 

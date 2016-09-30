@@ -1,9 +1,9 @@
-defmodule AllaisParadox do 
+defmodule SecretaryProblem do 
   use XeeThemeScript 
   require Logger 
-  alias AllaisParadox.Main 
-  alias AllaisParadox.Host 
-  alias AllaisParadox.Participant 
+  alias SecretaryProblem.Main 
+  alias SecretaryProblem.Host 
+  alias SecretaryProblem.Participant 
   # Callbacks 
   def script_type do 
     :message 
@@ -19,7 +19,6 @@ defmodule AllaisParadox do
   end 
   # Host router 
   def handle_received(data, %{"action" => action, "params" => params}) do 
-#    Logger.debug("[Allais Paradox] #{action} #{params}") 
     result = case {action, params} do 
       {"fetch contents", _} -> Host.fetch_contents(data) 
       {"change page", page} -> Host.change_page(data, page) 
@@ -32,9 +31,10 @@ defmodule AllaisParadox do
   end 
   # Participant router 
   def handle_received(data, %{"action" => action, "params" => params}, id) do 
-#    Logger.debug("[Allais Paradox] #{action} #{params}") 
     result = case {action, params} do 
       {"fetch contents", _} -> Participant.fetch_contents(data, id) 
+      {"next question", _} -> Participant.next_question(data, id)
+      {"finish", _} -> Participant.finish(data, id)
       _ -> {:ok, %{"data" => data}} 
     end 
     wrap_result(result) 

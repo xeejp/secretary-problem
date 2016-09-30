@@ -4,14 +4,15 @@ import { connect } from 'react-redux'
 import {Card, CardText, CardTitle } from 'material-ui/Card'
 import CircularProgress from 'material-ui/CircularProgress'
 
-const mapStateToProps = ({ joined }) => ({
-  joined
+const mapStateToProps = ({ joined, question_text }) => ({
+  joined, question_text
 })
 
-const Waiting = ({ joined }) => (
+const Waiting = ({ joined, question_text }) => (
 	<Card>
-		<CardTitle title="出席システム" subtitle="待機画面" />
+		<CardTitle title="秘書問題" subtitle="待機画面" />
 		<CardText>
+			{question_text['waiting_text'].split('\n').map(line => <p key={line}>{line}</p>)}
 			<p>現在{joined}人が参加しています。 </p>
 		</CardText>
 		<div style={{textAlign: "center"}}>

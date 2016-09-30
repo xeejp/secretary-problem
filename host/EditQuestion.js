@@ -1,108 +1,151 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {Tabs, Tab} from 'material-ui/Tabs'
-import {Card} from 'material-ui/Card'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ImageEdit from 'material-ui/svg-icons/image/edit'
-import FlatButton from 'material-ui/RaisedButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
+import Snackbar from 'material-ui/Snackbar'
 
-import { updateQuestion } from './actions'
+import { updateQuestion, fetchContents } from './actions'
+
+
 
 const mapStateToProps = ({ question_text, page }) => ({
   question_text, page
 })
 
 class EditQuestion extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     const { question_text } = this.props
     this.state = {
       question_text: question_text,
       open: false,
-      mainSlideIndex: 0,
-      default_text: {}
+      snack: false,
+      message: "設定を送信しました。",
+      disabled: false,
+      default_text: {
+        "secretaries": 10,
+        "waiting_text": "参加者の登録を待っています。\nこの画面のまましばらくお待ちください。",
+        "question": {
+          choices: ["不採用", "採用"]
+        }
+      }
     }
   }
 
-  QuestionTab(){
+  QuestionTab() {
     return (
-        <div>
-        </div>
+      <div>
+        <p>秘書の人数</p>
+        <TextField
+          hintText={"秘書の人数"}
+          defaultValue={this.state.question_text['secretaries']}
+          onBlur={this.handleChangeOnlyNum.bind(this, ['secretaries'])}
+          fullWidth={true}
+       />
+      </div>
     )
   }
 
   handleOpen() {
-    this.setState({ open: true });
+    const { dispatch } = this.props
+    dispatch(fetchContents())
+    this.setState({
+      open: true,
+      question_text: this.props.question_text})
   }
 
   handleClose() {
-    this.setState({ open: false })
+    this.setState({ open: false, disabled: false})
   }
 
-  handleChange(value, event){
-    var question_text = Object.assign({}, this.state.question_text)
-    var temp = question_text
-    for(var i = 0; i < value.length - 1; i++){
-      temp = temp[value[i]]
+  handleChangeOnlyNum(value, event){
+    if(isNaN(event.target.value) || event.target.value.indexOf('.') != -1) {
+      this.setState({ disabled: true })
+      return
     }
-    temp[value[value.length - 1]] = event.target.value
-    this.setState({ question_text: question_text })
+    var question_text = Object.assign({}, this.state.question_text)
+    var temp1 = question_text
+    for(var i = 0; i < value.length - 1; i++){
+      temp1 = temp1[value[i]]
+    }
+    var temp2 = parseInt(temp1[value[value.length - 1]])
+    temp1[value[value.length - 1]] = parseInt(event.target.value)
+    this.setState({ question_text: question_text, disabled: false })
+    if(parseInt(question_text.min) >= parseInt(question_text.max)){
+      temp1[value[value.length - 1]] = temp2
+      this.setState({ question_text: question_text, disabled: true })
+    }
   }
-
-  handleMainSlide(value){
-    this.setState({
-      mainSlideIndex: value
-    })
+  
+  handleRequestClose() {
+    this.setState({ snack: false })
   }
 
   submit() {
+    this.setState({
+      open: false,
+      snack: true,
+      message: "設定を送信しました。"
+    })
     const { dispatch } = this.props
     dispatch(updateQuestion(this.state.question_text))
-    this.setState({ open: false })
   }
 
   reset(){
+    this.setState({
+      question_text: this.state.default_text,
+      open: false,
+      snack: true,
+      message: "設定を初期化しました。"
+    })
     const { dispatch } = this.props
     dispatch(updateQuestion(this.state.default_text))
-    this.setState({ question_text: this.state.default_text, open: false})
   }
 
-  render(){
+  render() {
     const { page } = this.props
     const actions = [
-      <FlatButton
+      <RaisedButton
         label="適用"
+        disabled={this.state.disabled}
         primary={true}
         keyboardFocused={true}
         onTouchTap={this.submit.bind(this)}
       />,
-      <FlatButton
+      <RaisedButton
         label="キャンセル"
         onTouchTap={this.handleClose.bind(this)}
       />,
-     <FlatButton
+     <RaisedButton
         label="すべてリセット"
         onTouchTap={this.reset.bind(this)}
       />,
     ]
-    return (<div>
-      <FloatingActionButton onClick={this.handleOpen.bind(this)} disabled={page != "waiting"}>
-         <ImageEdit />
-      </FloatingActionButton>
-      <Dialog
-        title="編集画面"
-        actions={actions}
-        modal={false}
-        open={this.state.open}
-        onRequestClose={this.handleClose.bind(this)}
-        autoScrollBodyContent={this.state.mainSlideIndex == 1}
-      >
-       {this.QuestionTab()}
-      </Dialog>
-    </div>)
+
+    return (<span>
+    <FloatingActionButton onClick={this.handleOpen.bind(this)} disabled={page != "waiting"}>
+      <ImageEdit />
+    </FloatingActionButton>
+    <Dialog
+      title="編集画面"
+      actions={actions}
+      modal={false}
+      open={this.state.open}
+      autoScrollBodyContent={true}
+    >
+      {this.QuestionTab()}
+    </Dialog>
+      <Snackbar
+        open={this.state.snack}
+        message={this.state.message}
+        autoHideDuration={2000}
+        onRequestClose={this.handleRequestClose.bind(this)}
+      />
+    </span>)
   }
 }
 

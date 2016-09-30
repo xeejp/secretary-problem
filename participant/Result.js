@@ -2,12 +2,17 @@
 import { connect } from 'react-redux'
 
 import { fetchContents } from './actions'
+import Chart from 'components/Chart'
+import Ranking from './Ranking'
 
-const mapStateToProps = ({}) => ({
+const mapStateToProps = ({ result }) => ({
+  result
 })
 
-const Result = ({}) => (
+const Result = ({ result }) => (
   <div>
+    <Ranking /><br />
+    <Chart expanded={true} datas={result} />
   </div>
 )
 

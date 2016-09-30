@@ -1,6 +1,6 @@
-defmodule AllaisParadox.Host do
-  alias AllaisParadox.Main
-  alias AllaisParadox.Actions
+defmodule SecretaryProblem.Host do
+  alias SecretaryProblem.Main
+  alias SecretaryProblem.Actions
 
   require Logger
 
@@ -20,14 +20,20 @@ defmodule AllaisParadox.Host do
   end
 
   def all_reset(data) do
-    :random.seed(:os.timestamp)
-    flag = true
     data = data |> Map.put(:participants, Enum.into(Enum.map(data.participants, fn { id, _ } ->
-      {id, Main.new_participants(data) |> Map.put(:joined, Map.size(data.participants))}
+      {id, Main.new_participant(data) |> Map.put(:joined, Map.size(data.participants))}
     end), %{}))
                 |> Map.put(:joined, Map.size(data.participants))
                 |> Map.put(:answered, 0)
     Actions.all_reset(data)
+  end
+
+  def send_result(data, result) do
+    data = data |> Map.put(:participants, data.participants |> Enum.map(fn { id, value } ->
+      {id, value |> Map.put(:result, result)} end)
+      |> Enum.into(%{}))
+      |> Map.put(:answered, 0)
+    Actions.send_result(data, result)
   end
 
   def update_question(data, question_text) do
