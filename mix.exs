@@ -1,7 +1,7 @@
 defmodule SecretaryProblem.Mixfile do 
   use Mix.Project 
   def project do 
-    [app: :secretary_problem, 
+    [app: :xee_secretary_problem, 
      version: "0.1.0", 
      build_path: "../../_build", 
      config_path: "../../config/config.exs", 
