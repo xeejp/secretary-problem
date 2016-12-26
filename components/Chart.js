@@ -20,6 +20,7 @@ class Chart extends Component {
   
   render() {
     const { question_text, datas } = this.props
+    if(!question_text) return null
     let e = true
     for(var i = 0; e && i < datas.length; i++) e = (datas[i].y == 0)
     return (

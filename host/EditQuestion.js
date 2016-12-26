@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import {Tabs, Tab} from 'material-ui/Tabs'
+import SwipeableViews from 'react-swipeable-views'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ImageEdit from 'material-ui/svg-icons/image/edit'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -10,7 +12,7 @@ import Snackbar from 'material-ui/Snackbar'
 
 import { updateQuestion, fetchContents } from './actions'
 
-
+import { ReadJSON } from '../util/ReadJSON'
 
 const mapStateToProps = ({ question_text, page }) => ({
   question_text, page
@@ -20,34 +22,102 @@ class EditQuestion extends Component {
   constructor(props) {
     super(props)
     const { question_text } = this.props
+    var default_text = question_text
+    if(!question_text) {
+      default_text = ReadJSON().dynamic_text
+      const { dispatch } = this.props
+      dispatch(updateQuestion(default_text))
+    }
     this.state = {
-      question_text: question_text,
+      question_text: default_text,
       open: false,
       snack: false,
+      slideIndex: 0,
       message: "設定を送信しました。",
       disabled: false,
-      default_text: {
-        "secretaries": 10,
-        "waiting_text": "参加者の登録を待っています。\nこの画面のまましばらくお待ちください。",
-        "question": {
-          choices: ["不採用", "採用"]
-        }
-      }
+      default_text: ReadJSON().dynamic_text,
     }
   }
 
-  QuestionTab() {
+  WaitingTab() {
     return (
-      <div>
-        <p>秘書の人数</p>
+      <div style={{height: '100%', position: 'relative'}}>
         <TextField
-          hintText={"秘書の人数"}
-          defaultValue={this.state.question_text['secretaries']}
-          onBlur={this.handleChangeOnlyNum.bind(this, ['secretaries'])}
-          fullWidth={true}
+         hintText={"待機画面に表示するテキスト"}
+         defaultValue={this.state.question_text["waiting_text"]}
+         onBlur={this.handleChange.bind(this, ["waiting_text"])}
+         multiLine={true}
+         fullWidth={true}
+         style={{height: 1000}}
        />
       </div>
     )
+  }
+
+  DescriptionTab() {
+    return (
+      <div style={{height: '100%', position: 'relative'}}>
+        <TextField
+         hintText={"説明画面に表示するテキスト"}
+         defaultValue={this.state.question_text["description_text"]}
+         onBlur={this.handleChange.bind(this, ["description_text"])}
+         multiLine={true}
+         fullWidth={true}
+         style={{height: 1000}}
+       />
+      </div>
+    )
+  }
+
+  QuestionTab() {
+    return <div style={{height: '100%', position: 'relative'}}>
+      <TextField
+        hintText={this.state.question_text["hire"]}
+        defaultValue={this.state.question_text["hire"]}
+        onBlur={this.handleChange.bind(this, ["hire"])}
+        multiLine={false}
+        fullWidth={true}
+      />
+      <TextField
+        hintText={this.state.question_text["question_text"]}
+        defaultValue={this.state.question_text["question_text"]}
+        onBlur={this.handleChange.bind(this, ["question_text"])}
+        multiLine={true}
+        fullWidth={true}
+      />
+      選択肢1 :　
+      <TextField
+        hintText={this.state.question_text["question"]["choices"][0]}
+        defaultValue={this.state.question_text["question"]["choices"][0]}
+        onBlur={this.handleChange.bind(this, ["question", "choices", 0])}
+        multiLine={false}
+        fullWidth={false}
+      /><br />
+      選択肢2 :　
+      <TextField
+        hintText={this.state.question_text["question"]["choices"][1]}
+        defaultValue={this.state.question_text["question"]["choices"][1]}
+        onBlur={this.handleChange.bind(this, ["question", "choices", 1])}
+        multiLine={false}
+        fullWidth={false}
+      />
+    </div>
+  }
+
+  handleChange(value, event){
+    var question_text = Object.assign({}, this.state.question_text)
+    var temp = question_text
+    for(var i = 0; i < value.length - 1; i++){
+      temp = temp[value[i]]
+    }
+    temp[value[value.length - 1]] = event.target.value
+    this.setState({ question_text: question_text })
+  }
+
+  handleSlide(value) {
+    this.setState({
+      slideIndex: value
+    })
   }
 
   handleOpen() {
@@ -137,7 +207,22 @@ class EditQuestion extends Component {
       open={this.state.open}
       autoScrollBodyContent={true}
     >
-      {this.QuestionTab()}
+    <Tabs
+      onChange={this.handleSlide.bind(this)}
+      value={this.state.slideIndex}
+    >
+      <Tab label="待機画面" value={0} />
+      <Tab label="説明画面" value={1} />
+      <Tab label="問題画面" value={2} />
+    </Tabs>
+    <SwipeableViews
+      index={this.state.slideIndex}
+      onChangeIndex={this.handleSlide.bind(this)}
+    >
+      {this.     WaitingTab()}
+      {this.DescriptionTab()}
+      {this.    QuestionTab()}
+    </SwipeableViews>
     </Dialog>
       <Snackbar
         open={this.state.snack}

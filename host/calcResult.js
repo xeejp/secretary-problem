@@ -1,6 +1,7 @@
 import { calcSecretaries } from 'components/calcSecretaries'
 
 export function calcResult(participants, question_text) {
+  if(!question_text) return null
   let tmps = []
   let tmpr = []
   for(var i = 0; i < question_text['secretaries']; i++) {

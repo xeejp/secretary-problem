@@ -1,0 +1,18 @@
+{
+  "dynamic_text": {
+    "secretaries": 10,
+    "hire": "秘書",
+    "waiting_text": "参加者の登録を待っています。\nこの画面のまましばらくお待ちください。",
+    "description_text": "<hire>を1人雇いたいとします。\n<secretaries>人が応募してきています。\nランダムに1人ずつ面接をし、それぞれの面接後、その応募者を採用するかどうかを決定します。\n不採用にした応募者を後から採用することはできません。\nこのような状況で、最良の応募者を選択することがあなたの目的です",
+    "question_text": "<number>番目の評価は<point>点です。\nこれまでで<rank>番目に良い評価です。",
+    "question": {
+      "choices": [
+        "不採用",
+        "採用"
+      ]
+    }
+  },
+  "static_text": {
+    "title": "<hire>問題"
+  }
+}

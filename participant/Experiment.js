@@ -8,6 +8,8 @@ import { Card, CardText } from 'material-ui/Card'
 import { nextQuestion, finish } from './actions'
 import { calcSecretaries } from 'components/calcSecretaries'
 
+import { SplitAndInsert } from '../util/ReadJSON'
+
 import Ranking from './Ranking'
 import Numbers from './Numbers'
 
@@ -37,11 +39,10 @@ class Experiment extends Component {
     console.log(secretaries)
 
     let pages = []
-    for(var i = 0; i < question_text["secretaries"]; i++){
-      var text = (i + 1) + "番目の評価は" + secretaries[i][0] + "点です。\nこれまでで" + secretaries[i][2] + "番目に良い評価です。"
+    for(var i = 0; i < question_text["secretaries"]; i++) {
       pages[i] = 
       (<div style={{overflow: "hidden", margin: '5%'}} key={i}>
-        {text.split('\n').map(line => <p>{line}</p>)}<br />
+        <p>{SplitAndInsert(question_text["question_text"], { number: (i + 1), point: secretaries[i][0], rank: secretaries[i][2] })}</p><br />
         <RaisedButton onClick={this.next.bind(this)} disabled={i == question_text["secretaries"] - 1} style={{float : 'left', width: '40%', height: '300px', position: 'relative', margin: '5%'}}>
           <div style={{position: 'absolute', top: '40%', left: '50%', width: '100%', margin: '-1.5em 0 0 -50%'}}>
             {question_text["question"].choices[0].split('\n').map(line => <h5>{line}</h5>)}

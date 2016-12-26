@@ -13,13 +13,7 @@ defmodule SecretaryProblem.Main do
       participants: %{},
       joined: 0,
       answered: 0,
-      question_text: %{
-        "secretaries": 10,
-        "waiting_text": "参加者の登録を待っています。\nこの画面のまましばらくお待ちください。",
-        "question": %{
-          choices: ["不採用", "採用"]
-        }
-      }
+      question_text: nil
     }
   end
 
