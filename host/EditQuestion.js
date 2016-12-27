@@ -12,7 +12,7 @@ import Snackbar from 'material-ui/Snackbar'
 
 import { updateQuestion, fetchContents } from './actions'
 
-import { ReadJSON } from '../util/ReadJSON'
+import { ReadJSON, SplitAndInsert } from '../util/ReadJSON'
 
 const mapStateToProps = ({ question_text, page }) => ({
   question_text, page

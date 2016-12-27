@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const UsersList = ({participants, page, openParticipantPage }) => (
   <table>
-    <thead><tr><th>id</th><th>status</th></tr></thead>
+    <thead><tr><th>{ReadJSON().static_text["users"]["id"]}</th><th>{ReadJSON().static_text["users"]["status"]}</th></tr></thead>
     <tbody>
       {
         Object.keys(participants).map(id => (

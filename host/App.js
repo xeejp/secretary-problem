@@ -53,10 +53,10 @@ class App extends Component {
           <DownloadButton
             fileName={"secretary_problem.csv"}
             list={[
-              [SplitAndInsert(text["title"],question_text)],
+              question_text? [SplitAndInsert(text["title"],question_text)]: null,
               [text["app"]["date"], new Date()],
-              participants? [text["app"]["people"], Object.keys(participants).length] : [],
-              [text["app"]["id"][0], SplitAndInsert(text["app"]["id"][1],question_text), SplitAndInsert(text["app"]["id"][2],question_text), text["app"]["id"][3], SplitAndInsert(text["app"]["id"][4],question_text)],
+              participants? [text["app"]["people"], Object.keys(participants).length] : null,
+              question_text? [text["app"]["id"][0], SplitAndInsert(text["app"]["id"][1],question_text), SplitAndInsert(text["app"]["id"][2],question_text), text["app"]["id"][3], SplitAndInsert(text["app"]["id"][4],question_text)]: null,
             ].concat(
               (participants && question_text)? Object.keys(participants).map(id => { if(participants[id].answer < 0) return [id, text["app"]["no_answer"], "-", "-", "-"];  var tmp = calcSecretaries(question_text['secretaries'], participants[id].secretaries); return [id, participants[id].answer + 1, tmp[participants[id].answer][1], tmp[participants[id].answer][2], tmp[participants[id].answer][0]] }) : []
             )}

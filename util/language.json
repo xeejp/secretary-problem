@@ -42,6 +42,8 @@
       "setting": "設定"
     },
     "users": {
+      "id": "id",
+      "status": "status",
       "people": "登録者 ",
       "person_unit": "人"
     },
