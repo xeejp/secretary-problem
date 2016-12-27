@@ -5,6 +5,8 @@ import { fetchContents } from './actions'
 
 import Pages from './Pages'
 
+import { ReadJSON,LineBreak } from '../util/ReadJSON'
+
 const mapStateToProps = ({ loading, active }) => ({
   loading,
   active
@@ -24,7 +26,7 @@ class App extends Component {
   render() {
     const { loading, active } = this.props
     if (loading) {
-      return <p>ロード中です。</p>
+      return <p>{ReadJSON().static_text["loading"]}</p>
     } else if(active) {
       return (
         <div>
@@ -34,8 +36,7 @@ class App extends Component {
     } else {
       return (
         <div>
-          <p>この実験の受け付けは終了しました。</p>
-          <p>次の実験をお待ちください。</p>
+          <p>{LineBreak(ReadJSON().static_text["part_app"]["end"])}</p>
         </div>
       )
     }

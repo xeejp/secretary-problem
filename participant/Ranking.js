@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import { calcSecretaries } from 'components/calcSecretaries'
 
+import { ReadJSON, SplitAndInsert } from '../util/ReadJSON'
+
 const mapStateToProps = ({ question_text, secretaries, answer }) => ({
   question_text, secretaries, answer
 })
@@ -22,9 +24,9 @@ class Ranking extends Component {
   rank(){
     return this.state.secretaries.map((v, i) => (
       <tr key={i} style={{ background: (this.props.answer == i)? "#CCCCCC" : undefined}}>
-        <td>{(i + 1) + "番目の秘書"}</td>
-        <td>{v[1] + "位"}</td>
-        <td>{v[0] + "ポイント"}</td>
+        <td>{(i + 1) + SplitAndInsert(ReadJSON().static_text["part_ranking"]["rank"][0],this.props.question_text)}</td>
+        <td>{v[1] + ReadJSON().static_text["part_ranking"]["rank"][1]}</td>
+        <td>{v[0] + ReadJSON().static_text["part_ranking"]["rank"][2]}</td>
       </tr>
     ))
   }
@@ -38,7 +40,7 @@ class Ranking extends Component {
         }}
       >
         <CardHeader
-          title={"秘書全員のポイント"}
+          title={SplitAndInsert(ReadJSON().static_text["part_ranking"]["title"],this.props.question_text)}
           actAsExpander={true}
           showExpandableButton={true}
         />
@@ -46,9 +48,9 @@ class Ranking extends Component {
           <table>
             <thead>
               <tr>
-                <th>秘書</th>
-                <th>順位</th>
-                <th>ポイント</th>
+                <th>{SplitAndInsert(ReadJSON().static_text["part_ranking"]["card"][0],this.props.question_text)}</th>
+                <th>{ReadJSON().static_text["part_ranking"]["card"][1]}</th>
+                <th>{ReadJSON().static_text["part_ranking"]["card"][2]}</th>
               </tr>
             </thead>
             <tbody>

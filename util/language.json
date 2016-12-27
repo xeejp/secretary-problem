@@ -13,6 +13,91 @@
     }
   },
   "static_text": {
-    "title": "<hire>問題"
+    "title": "<hire>問題",
+    "send_message": "設定を送信しました。",
+    "reset_message": "設定を初期化しました。",
+    "apply": "適用",
+    "cancel": "キャンセル",
+    "reset": "すべてリセット",
+    "loading": "ロード中です。",
+    "waiting_page": "待機画面",
+    "app": {
+      "date": "実験日",
+      "people": "登録者数",
+      "id": [
+        "ID",
+        "何番目の<hire>を採用したか",
+        "採用した<hire>の順位",
+        "採用した時点での順位",
+        "採用した<hire>の得点"
+      ],
+      "no_answer": "未回答"
+    },
+    "page_button": {
+      "back": "戻る",
+      "next": "次へ"
+    },
+    "config": {
+      "people_num": "<hire>の人数",
+      "setting": "設定"
+    },
+    "users": {
+      "people": "登録者 ",
+      "person_unit": "人"
+    },
+    "editquestion": {
+      "waiting": "待機画面に表示するテキスト",
+      "description": "説明画面に表示するテキスト",
+      "choice1": "選択肢1 :",
+      "choice2": "選択肢2 :",
+      "editor": "編集画面",
+      "description_page": "説明画面",
+      "question_page": "問題画面"
+    },
+    "calc_result": {
+      "name": "人目の<hire>"
+    },
+    "part_app": {
+      "end": "この実験の受付は終了しました。\n次の実験をお待ちください。"
+    },
+    "part_description": {
+      "description": "ルールの説明"
+    },
+    "part_waiting": {
+      "joined": [
+        "現在",
+        "人が参加しています。"
+      ]
+    },
+    "part_experiment": {
+      "end": "あなたの回答は終了しました。他の参加者の回答が終了するまでこのままお待ちください。\n下より<hire>の評価値と順位を確認することができます。"
+    },
+    "part_ranking": {
+      "rank": [
+        "番目の<hire>",
+        "位",
+        "ポイント"
+      ],
+      "title": "<hire>全員のポイント",
+      "card": [
+        "<hire>",
+        "順位",
+        "ポイント"
+      ]
+    },
+    "comp_chart": {
+      "title": "実験結果",
+      "rank_ave": "順位の平均",
+      "rank_unit": "位",
+      "ave_rank": "の平均の順位",
+      "secretary": "<hire>",
+      "no_answer": "回答した人がいません。"
+    },
+    "util_index": {
+      "waiting": "待機",
+      "description": "説明",
+      "experiment": "実験",
+      "end": "終了"
+    }
   }
 }

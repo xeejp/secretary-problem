@@ -1,5 +1,7 @@
 import { calcSecretaries } from 'components/calcSecretaries'
 
+import { ReadJSON, SplitAndInsert } from '../util/ReadJSON'
+
 export function calcResult(participants, question_text) {
   if(!question_text) return null
   let tmps = []
@@ -18,7 +20,7 @@ export function calcResult(participants, question_text) {
   let datas = []
   for(var i = 0; i < question_text['secretaries']; i++){
     datas[i] = {
-      name: (i + 1) + '人目の秘書',
+      name: (i + 1) + SplitAndInsert(ReadJSON().static_text["calc_result"]["name"],question_text),
       y: (tmps[i] == 0)? 0 : question_text['secretaries'] - (tmpr[i] / tmps[i]) + 1
     }
   }

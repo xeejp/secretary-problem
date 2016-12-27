@@ -14,6 +14,8 @@ import Chart from 'components/Chart'
 import { calcResult } from './calcResult'
 import { calcSecretaries } from 'components/calcSecretaries'
 
+import { ReadJSON, LineBreak, SplitAndInsert } from '../util/ReadJSON'
+
 const mapStateToProps = ({loading, page, participants, question_text}) => ({
   loading, page, participants, question_text
 })
@@ -31,8 +33,9 @@ class App extends Component {
 
   render() {
     const { loading, page, participants, question_text } = this.props
+    const text = ReadJSON().static_text
     if (loading) {
-      return <p>ロード中です。</p>
+      return <p>{text["loading"]}</p>
     } else {
       return (
         <div>
@@ -50,12 +53,12 @@ class App extends Component {
           <DownloadButton
             fileName={"secretary_problem.csv"}
             list={[
-              ["秘書問題"],
-              ["実験日", new Date()],
-              participants? ["登録者数", Object.keys(participants).length] : [],
-              ["ID", "何番目の秘書を採用したか", "採用した秘書の順位", "採用した時点での順位", "採用した秘書の得点"],
+              [SplitAndInsert(text["title"],question_text)],
+              [text["app"]["date"], new Date()],
+              participants? [text["app"]["people"], Object.keys(participants).length] : [],
+              [text["app"]["id"][0], SplitAndInsert(text["app"]["id"][1],question_text), SplitAndInsert(text["app"]["id"][2],question_text), text["app"]["id"][3], SplitAndInsert(text["app"]["id"][4],question_text)],
             ].concat(
-              (participants && question_text)? Object.keys(participants).map(id => { if(participants[id].answer < 0) return [id, "未回答", "-", "-", "-"];  var tmp = calcSecretaries(question_text['secretaries'], participants[id].secretaries); return [id, participants[id].answer + 1, tmp[participants[id].answer][1], tmp[participants[id].answer][2], tmp[participants[id].answer][0]] }) : []
+              (participants && question_text)? Object.keys(participants).map(id => { if(participants[id].answer < 0) return [id, text["app"]["no_answer"], "-", "-", "-"];  var tmp = calcSecretaries(question_text['secretaries'], participants[id].secretaries); return [id, participants[id].answer + 1, tmp[participants[id].answer][1], tmp[participants[id].answer][2], tmp[participants[id].answer][0]] }) : []
             )}
           disabled={page != "result"}
           style={{marginLeft: '2%'}}

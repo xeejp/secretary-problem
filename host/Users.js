@@ -7,6 +7,8 @@ import { Card, CardHeader, CardText } from 'material-ui/Card'
 
 import { openParticipantPage } from './actions'
 
+import { ReadJSON } from '../util/ReadJSON'
+
 const User = ({ id, status, openParticipantPage }) => (
   <tr><td><a onClick={openParticipantPage(id)}>{id}</a></td><td>{status}</td></tr>
 )
@@ -42,7 +44,7 @@ const Users = ({ participants, page, openParticipantPage }) => (
   <div>
     <Card>
       <CardHeader
-        title={"登録者 " + Object.keys(participants).length + "人"}
+        title={ReadJSON().static_text["users"]["people"] + Object.keys(participants).length + ReadJSON().static_text["users"]["person_unit"]}
         actAsExpander={true}
         showExpandableButton={true}
       />

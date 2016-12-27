@@ -10,6 +10,8 @@ import { calcSecretaries } from 'components/calcSecretaries'
 
 import { SplitAndInsert } from '../util/ReadJSON'
 
+import { ReadJSON, LineBreak } from '../util/ReadJSON'
+
 import Ranking from './Ranking'
 import Numbers from './Numbers'
 
@@ -57,8 +59,7 @@ class Experiment extends Component {
     }
     pages.push(
       <div style={{margin: '5%'}}>
-        <p>あなたの回答は終了しました。他の参加者の回答が終了するまでこのままお待ちください。</p>
-        <p>下より秘書の評価値と順位を確認することができます。</p>
+        <p>{SplitAndInsert(ReadJSON().static_text["part_experiment"]["end"],question_text)}</p>
       </div>)
     console.log(slideIndex + " " + question_text['secretaries'])
     return (<div>

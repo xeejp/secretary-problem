@@ -12,10 +12,10 @@ const mapStateToProps = ({ joined, question_text }) => ({
 
 const Waiting = ({ joined, question_text }) => (
 	<Card>
-		<CardTitle title={SplitAndInsert(ReadJSON().static_text["title"], question_text)} subtitle="待機画面" />
+		<CardTitle title={SplitAndInsert(ReadJSON().static_text["title"], question_text)} subtitle={ReadJSON().static_text["waiting_page"]} />
 		<CardText>
 			{question_text['waiting_text'].split('\n').map(line => <p key={line}>{line}</p>)}
-			<p>現在{joined}人が参加しています。 </p>
+			<p>{ReadJSON().static_text["part_waiting"]["joined"][0] + joined + ReadJSON().static_text["part_waiting"]["joined"][1]} </p>
 		</CardText>
 		<div style={{textAlign: "center"}}>
 			<CircularProgress size={2}/>

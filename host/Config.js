@@ -10,7 +10,7 @@ import Snackbar from 'material-ui/Snackbar'
 
 import { updateQuestion, fetchContents } from './actions'
 
-import { ReadJSON } from '../util/ReadJSON'
+import { ReadJSON, SplitAndInsert } from '../util/ReadJSON'
 
 const mapStateToProps = ({ question_text, page }) => ({
   question_text, page
@@ -21,16 +21,18 @@ class Config extends Component {
     super(props)
     const { question_text } = this.props
     var default_text = question_text
+    var static_text = ReadJSON().static_text
     if(!question_text) {
       default_text = ReadJSON().dynamic_text
       const { dispatch } = this.props
       dispatch(updateQuestion(default_text))
     }
     this.state = {
+      static_text: static_text,
       question_text: default_text,
       open: false,
       snack: false,
-      message: "設定を送信しました。",
+      message: static_text["send_message"],
       disabled: false,
       default_text: ReadJSON().dynamic_text,
     }
@@ -39,9 +41,9 @@ class Config extends Component {
   QuestionTab() {
     return (
       <div>
-        <p>秘書の人数</p>
+        <p>{SplitAndInsert(this.state.static_text["config"]["people_num"],this.state.question_text)}</p>
         <TextField
-          hintText={"秘書の人数"}
+          hintText={SplitAndInsert(this.state.static_text["config"]["people_num"],this.state.question_text)}
           defaultValue={this.state.question_text['secretaries']}
           onBlur={this.handleChangeOnlyNum.bind(this, ['secretaries'])}
           fullWidth={true}
@@ -89,7 +91,7 @@ class Config extends Component {
     this.setState({
       open: false,
       snack: true,
-      message: "設定を送信しました。"
+      message: this.state.static_text["send_message"]
     })
     const { dispatch } = this.props
     dispatch(updateQuestion(this.state.question_text))
@@ -100,7 +102,7 @@ class Config extends Component {
       question_text: this.state.default_text,
       open: false,
       snack: true,
-      message: "設定を初期化しました。"
+      message: this.state.static_text["reset_message"]
     })
     const { dispatch } = this.props
     dispatch(updateQuestion(this.state.default_text))
@@ -110,18 +112,18 @@ class Config extends Component {
     const { page } = this.props
     const actions = [
       <RaisedButton
-        label="適用"
+        label={this.state.static_text["apply"]}
         disabled={this.state.disabled}
         primary={true}
         keyboardFocused={true}
         onTouchTap={this.submit.bind(this)}
       />,
       <RaisedButton
-        label="キャンセル"
+        label={this.state.static_text["cancel"]}
         onTouchTap={this.handleClose.bind(this)}
       />,
      <RaisedButton
-        label="すべてリセット"
+        label={this.state.static_text["reset"]}
         onTouchTap={this.reset.bind(this)}
       />,
     ]
@@ -131,7 +133,7 @@ class Config extends Component {
       <ActionSettings />
     </FloatingActionButton>
     <Dialog
-      title="設定"
+      title={this.state.static_text["config"]["setting"]}
       actions={actions}
       modal={false}
       open={this.state.open}
