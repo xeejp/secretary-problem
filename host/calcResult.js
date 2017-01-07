@@ -11,7 +11,7 @@ export function calcResult(participants, question_text) {
   for(var id in participants) {
     if(participants[id].answer != -1) {
       tmps[participants[id].answer]++
-      tmpr[participants[id].answer] += calcSecretaries(question_text['secretaries'], participants[id].secretaries)[participants[id].answer][1]
+      tmpr[participants[id].answer] += calcSecretaries(question_text['secretaries'], participants[id].max, participants[id].secretaries)[participants[id].answer][1]
     }
   }
 

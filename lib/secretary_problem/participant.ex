@@ -13,12 +13,12 @@ defmodule SecretaryProblem.Participant do
 
   def finish(data, id) do
     data = data |> put_in([:participants, id, :answer], data.participants[id].slideIndex)
-                    |> put_in([:participants, id, :slideIndex],
-                      case data.question_text["secretaries"] do
-                        nil -> data.question_text.secretaries
-                        _   -> data.question_text["secretaries"]
-                      end)
-                    |> Map.put(:answered, data.answered + 1)
+                |> put_in([:participants, id, :slideIndex],
+                  case data.question_text["secretaries"] do
+                    nil -> data.question_text.secretaries
+                    _   -> data.question_text["secretaries"]
+                  end)
+                |> Map.put(:answered, data.answered + 1)
     Actions.finish(data, id)
   end
 

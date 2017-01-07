@@ -1,4 +1,4 @@
-export function calcSecretaries(max, seed) {
+export function calcSecretaries(count, max, seed) {
   let xorshift = seed => {
    seed = seed ^ (seed << 13)
    seed = seed ^ (seed >> 17)
@@ -8,9 +8,9 @@ export function calcSecretaries(max, seed) {
 
   let points = []
   let back = seed;
-  for(var i = 0; i < max; i++){
+  for(var i = 0; i < count; i++){
     back = xorshift(back)
-    points[i] = back % 100 + 1
+    points[i] = back % max + 1
     for(var j = 0; j < i; j++){
       if(points[j] == points[i]) {
         i--
@@ -18,6 +18,7 @@ export function calcSecretaries(max, seed) {
       }
     }
   }
+
   let sorted = points.concat().sort((a, b) => b - a)
   let tmp = []
   let res = points.map(v => {

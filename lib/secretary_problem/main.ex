@@ -24,7 +24,8 @@ defmodule SecretaryProblem.Main do
       joined: 1,
       answer: -1,
       slideIndex: 0,
-      secretaries: :rand.uniform(100000000),
+      secretaries: :rand.uniform(100000000) + 1,
+      max: :rand.uniform(950) + 50,
       result: [],
     }
   end

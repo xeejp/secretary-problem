@@ -4,18 +4,16 @@ import { connect } from 'react-redux'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import { calcSecretaries } from 'components/calcSecretaries'
 
-const mapStateToProps = ({ question_text, secretaries, answer }) => ({
-  question_text, secretaries, answer
+const mapStateToProps = ({ question_text, secretaries, answer, max }) => ({
+  question_text, secretaries, answer, max
 })
-
-
 
 class Ranking extends Component {
   constructor(props){
     super(props)
     this.state = {
       max: this.props.question_text['secretaries'],
-      secretaries: calcSecretaries(this.props.question_text['secretaries'], this.props.secretaries)
+      secretaries: calcSecretaries(this.props.question_text['secretaries'], this.props.max, this.props.secretaries)
     }
   }
 
@@ -31,7 +29,7 @@ class Ranking extends Component {
 
   render() {
     return (
-      <Card 
+      <Card
         style={{
           marginBottom: "5%",
           marginTop: "5%",

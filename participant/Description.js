@@ -13,7 +13,9 @@ const Description = ({ question_text }) => (
   <Card>
     <CardTitle title="秘書問題" subtitle="ルールの説明" />
     <CardText>
-      <p>{SplitAndInsert(question_text["description_text"], question_text)}</p>
+      <pre>
+        {SplitAndInsert(question_text["description_text"], question_text)}
+      </pre>
     </CardText>
   </Card>
 )

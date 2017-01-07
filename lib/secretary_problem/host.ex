@@ -38,8 +38,9 @@ defmodule SecretaryProblem.Host do
 
   def update_question(data, question_text) do
     data = data |> Map.put(:question_text, question_text)
-                     |> Map.put(:participants, Enum.into(Enum.map(data.participants, fn { id, value } ->
-                       { id, value |> Map.put(:question_text, question_text) } end), %{}))
+                |> Map.put(:participants, Enum.into(Enum.map(data.participants, fn { id, value } ->
+                  { id, value |> Map.put(:question_text, question_text) }
+                end), %{}))
     Actions.update_question(data, question_text)
   end
 

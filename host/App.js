@@ -55,7 +55,7 @@ class App extends Component {
               participants? ["登録者数", Object.keys(participants).length] : [],
               ["ID", "何番目の秘書を採用したか", "採用した秘書の順位", "採用した時点での順位", "採用した秘書の得点"],
             ].concat(
-              (participants && question_text)? Object.keys(participants).map(id => { if(participants[id].answer < 0) return [id, "未回答", "-", "-", "-"];  var tmp = calcSecretaries(question_text['secretaries'], participants[id].secretaries); return [id, participants[id].answer + 1, tmp[participants[id].answer][1], tmp[participants[id].answer][2], tmp[participants[id].answer][0]] }) : []
+              (participants && question_text)? Object.keys(participants).map(id => { if(participants[id].answer < 0) return [id, "未回答", "-", "-", "-"];  var tmp = calcSecretaries(question_text['secretaries'], participants[id].max, participants[id].secretaries); return [id, participants[id].answer + 1, tmp[participants[id].answer][1], tmp[participants[id].answer][2], tmp[participants[id].answer][0]] }) : []
             )}
           disabled={page != "result"}
           style={{marginLeft: '2%'}}

@@ -14,7 +14,7 @@ defmodule SecretaryProblem.Actions do
     paction = get_action("joined", Map.size(data.participants))
     format(data, haction, dispatch_to_all(data, paction))
   end
-  
+
   def update_host_contents(data) do
     host = get_action("update contents", Host.format_contents(data))
     format(data, host)

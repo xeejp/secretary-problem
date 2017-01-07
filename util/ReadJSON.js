@@ -5,18 +5,6 @@ export function ReadJSON() {
   return ReadJSON.text
 }
 
-export function LineBreak(text) {
-  var regex = /(\n)/g
-  return text.split(regex).map(function (line) {
-    if (line.match(regex)) {
-      return React.createElement('br')
-    }
-    else {
-      return line
-    }
-  })
-}
-
 export function SplitAndInsert(text, question_text) {
   var split = text.match(/<[^<^>]+>/g)
   var strings = text.split(/<[^<^>]+>/g)
@@ -28,5 +16,5 @@ export function SplitAndInsert(text, question_text) {
         }
         strings[i] += temp? temp : split[i]
   }
-  return LineBreak(strings.join(""))
+  return strings.join("")
 }
