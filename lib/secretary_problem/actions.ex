@@ -27,6 +27,11 @@ defmodule SecretaryProblem.Actions do
     format(data, haction, allaction)
   end
 
+  def visit(data) do
+    haction = get_action("visited", data.is_first_visit)
+    format(data, haction)
+  end
+
   def send_result(data, result) do
     haction = get_action("result", %{})
     paction = get_action("result", result)

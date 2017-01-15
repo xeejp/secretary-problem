@@ -8,12 +8,12 @@ import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import Snackbar from 'material-ui/Snackbar'
 
-import { updateQuestion, fetchContents } from './actions'
+import { updateQuestion, fetchContents, visit } from './actions'
 
 import { ReadJSON } from '../util/ReadJSON'
 
-const mapStateToProps = ({ question_text, page }) => ({
-  question_text, page
+const mapStateToProps = ({ question_text, page, is_first_visit }) => ({
+  question_text, page, is_first_visit
 })
 
 class Config extends Component {
@@ -34,6 +34,16 @@ class Config extends Component {
       disabled: false,
       default_text: ReadJSON().dynamic_text,
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { is_first_visit } = nextProps
+    const open = is_first_visit || this.state.open
+    if (is_first_visit) {
+      const { dispatch } = this.props
+      dispatch(visit())
+    }
+    this.setState({open: open})
   }
 
   QuestionTab() {
@@ -80,7 +90,7 @@ class Config extends Component {
       this.setState({ question_text: question_text, disabled: true })
     }
   }
-  
+
   handleRequestClose() {
     this.setState({ snack: false })
   }

@@ -15,6 +15,7 @@ const reducer = concatenateReducers([
       participants: participants, joined: joined, answered: answered }),
     'result': (_, { payload }) => ({ answered: 0 }),
     'qupdate': (_, { payload }) => ({ question_text: payload }),
+    'visited': (_, { payload }) => ({ is_first_visit: payload }),
   }, {}),
   handleAction('update contents', () => ({ loading: false }), { loading: true })
 ])

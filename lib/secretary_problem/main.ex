@@ -13,7 +13,8 @@ defmodule SecretaryProblem.Main do
       participants: %{},
       joined: 0,
       answered: 0,
-      question_text: nil
+      question_text: nil,
+      is_first_visit: true
     }
   end
 

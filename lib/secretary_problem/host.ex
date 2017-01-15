@@ -28,6 +28,10 @@ defmodule SecretaryProblem.Host do
     Actions.all_reset(data)
   end
 
+  def visit(data) do
+    Action.visit(%{data | is_first_visit: false})
+  end
+
   def send_result(data, result) do
     data = data |> Map.put(:participants, data.participants |> Enum.map(fn { id, value } ->
       {id, value |> Map.put(:result, result)} end)
