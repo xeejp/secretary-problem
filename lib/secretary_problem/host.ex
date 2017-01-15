@@ -29,7 +29,7 @@ defmodule SecretaryProblem.Host do
   end
 
   def visit(data) do
-    Action.visit(%{data | is_first_visit: false})
+    Actions.visit(%{data | is_first_visit: false})
   end
 
   def send_result(data, result) do
