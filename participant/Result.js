@@ -2,7 +2,7 @@
 import { connect } from 'react-redux'
 
 import { fetchContents } from './actions'
-import Chart from 'components/Chart'
+import Chart from '../components/Chart'
 import Ranking from './Ranking'
 
 const mapStateToProps = ({ result }) => ({

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { Card, CardHeader, CardText } from 'material-ui/Card'
-import { calcSecretaries } from 'components/calcSecretaries'
+import { calcSecretaries } from '../components/calcSecretaries'
 
 const mapStateToProps = ({ question_text, secretaries, answer, max }) => ({
   question_text, secretaries, answer, max

@@ -1,4 +1,4 @@
-import { calcSecretaries } from 'components/calcSecretaries'
+import { calcSecretaries } from '../components/calcSecretaries'
 
 export function calcResult(participants, question_text) {
   if(!question_text) return null

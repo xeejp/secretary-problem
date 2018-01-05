@@ -6,7 +6,7 @@ import SwipeableViews from 'react-swipeable-views'
 import { Card, CardText } from 'material-ui/Card'
 
 import { nextQuestion, finish } from './actions'
-import { calcSecretaries } from 'components/calcSecretaries'
+import { calcSecretaries } from '../components/calcSecretaries'
 
 import { SplitAndInsert } from '../util/ReadJSON'
 

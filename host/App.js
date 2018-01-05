@@ -10,9 +10,9 @@ import Config from './Config.js'
 import EditQuestion from './EditQuestion'
 import DownloadButton from './DownloadButton'
 import Users from './Users'
-import Chart from 'components/Chart'
+import Chart from '../components/Chart'
 import { calcResult } from './calcResult'
-import { calcSecretaries } from 'components/calcSecretaries'
+import { calcSecretaries } from '../components/calcSecretaries'
 
 const mapStateToProps = ({loading, page, participants, question_text}) => ({
   loading, page, participants, question_text

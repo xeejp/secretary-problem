@@ -7,7 +7,7 @@ import { Step, Stepper, StepButton } from 'material-ui/Stepper'
 
 import { submitPage, nextPage, backPage } from './actions'
 
-import { getPage } from 'util/index'
+import { getPage } from '../util/index'
 
 const pages = ["waiting", "description", "experiment", "result"]
 

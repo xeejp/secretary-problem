@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { pink400 } from 'material-ui/styles/colors';
 
 import Avatar from 'material-ui/Avatar'
-import { calcSecretaries } from 'components/calcSecretaries'
+import { calcSecretaries } from '../components/calcSecretaries'
 
 const mapStateToProps = ({}) => ({})
 
