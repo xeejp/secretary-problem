@@ -31,7 +31,7 @@ class App extends Component {
 
   render() {
     const { loading, page, participants, question_text } = this.props
-    if (loading) {
+    if (loading || !participants) {
       return <p>ロード中です。</p>
     } else {
       return (
@@ -46,7 +46,7 @@ class App extends Component {
           <Users /><br />
           <Chart expanded={false} datas={calcResult(participants, question_text)} /><br />
           <Config />
-          <EditQuestion />
+          {(question_text)?<EditQuestion />:null}
           <DownloadButton
             fileName={"secretary_problem.csv"}
             list={[

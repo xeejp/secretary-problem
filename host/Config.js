@@ -124,15 +124,15 @@ class Config extends Component {
         disabled={this.state.disabled}
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.submit.bind(this)}
+        onClick={this.submit.bind(this)}
       />,
       <RaisedButton
         label="キャンセル"
-        onTouchTap={this.handleClose.bind(this)}
+        onClick={this.handleClose.bind(this)}
       />,
      <RaisedButton
         label="すべてリセット"
-        onTouchTap={this.reset.bind(this)}
+        onClick={this.reset.bind(this)}
       />,
     ]
 

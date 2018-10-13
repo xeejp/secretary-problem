@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions'
+import { createAction } from 'redux-act'
 
 export const fetchContents = createAction('fetch contents')
 export const nextQuestion = createAction('next question')
